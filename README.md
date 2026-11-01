@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="banner.png" alt="banner" width="100%">
+</p>
+
 # Optimization & Privacy
 
 Аддон для PulseSync: снижает нагрузку на CPU/GPU и диск, устраняет утечки памяти и отключает сбор телеметрии в Яндекс Музыке.
