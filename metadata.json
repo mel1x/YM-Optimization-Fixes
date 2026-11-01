@@ -1,0 +1,24 @@
+{
+    "id": "optimization-privacy",
+    "name": "Optimization & Privacy",
+    "description": "Фиксы проблем производительности и утечек RAM, опциональное отключение телеметрии.",
+    "version": "1.0.0",
+    "author": "mix",
+    "type": "script",
+    "image": "logo.png",
+    "banner": "banner.png",
+    "libraryLogo": "logo.png",
+    "css": "style.css",
+    "script": "script.js",
+    "tags": [
+        "performance",
+        "memory",
+        "privacy",
+        "script"
+    ],
+    "dependencies": [],
+    "conflictsWith": [],
+    "allowedUrls": [],
+    "supportedVersions": [],
+    "installSource": "local"
+}

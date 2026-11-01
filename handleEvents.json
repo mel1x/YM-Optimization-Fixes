@@ -1,0 +1,46 @@
+{
+    "sections": [
+        {
+            "title": "Приватность",
+            "items": [
+                {
+                    "id": "disableTracking",
+                    "name": "Блокировка трекинга и аналитики",
+                    "description": "Блокирует Метрику, RUM, отправку отчётов об ошибках и рекламные пиксели. Музыкальное API, авторизация и сквозной учёт прослушиваний остаются нетронутыми.",
+                    "type": "button",
+                    "bool": false,
+                    "defaultParameter": false
+                }
+            ]
+        },
+        {
+            "title": "Анимации и эффекты",
+            "items": [
+                {
+                    "id": "disablePlayingAnimation",
+                    "name": "Отключить пульсацию текущего трека",
+                    "description": "Убирает цикличную пульсацию кружка на обложке играющего трека в списках и плейлистах.",
+                    "type": "button",
+                    "bool": false,
+                    "defaultParameter": false
+                },
+                {
+                    "id": "disableSmoothProgress",
+                    "name": "Отключить плавный прогресс-бар",
+                    "description": "Полоса воспроизведения и таймкод обновляются с шагом в секунду, разгружая графический процессор.",
+                    "type": "button",
+                    "bool": false,
+                    "defaultParameter": false
+                },
+                {
+                    "id": "hardMode",
+                    "name": "Hard Mode (без анимаций и размытия)",
+                    "description": "Полностью отключает все CSS/JS анимации интерфейса и ресурсоёмкие эффекты размытия (blur/backdrop-filter).",
+                    "type": "button",
+                    "bool": false,
+                    "defaultParameter": false
+                }
+            ]
+        }
+    ]
+}
