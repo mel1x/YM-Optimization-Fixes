@@ -2,7 +2,7 @@
     "id": "optimization-privacy",
     "name": "Optimization & Privacy",
     "description": "Фиксы проблем производительности и утечек RAM, опциональное отключение телеметрии.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "mix",
     "type": "script",
     "image": "logo.png",

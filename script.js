@@ -3,6 +3,7 @@
 // - loading shimmer stuck under cached images is cancelled
 // - external sprite.svg (reloaded per icon batch, never freed) is inlined once
 // - mobx-react-lite observer and ad SDK leaks on page change
+// - PulseSync metadata sync bursts on page change are merged
 // - Ynison state in localStorage: position-only updates once a minute
 // - optional: tracking and animations off
 
@@ -21,6 +22,8 @@
         skipped: 0,
         fpsProbeBlocked: 0,
         shimmerPaused: 0,
+        metaSyncRuns: 0,
+        metaSyncDeferred: 0,
         observerAdmsCleaned: 0,
         ynisonWritten: 0,
         ynisonDeferred: 0,
@@ -74,6 +77,41 @@
             return 0; // cancelAnimationFrame(0) is a no-op
         }
         return raf.call(window, cb);
+    });
+
+    // ---- PulseSync metadata sync ----
+
+    // The PulseSync runtime re-clones every live track/album/artist (~40 ms) in a
+    // microtask each time a new entity registers - up to 9 times per page change.
+    // The first run goes through at once, the rest are merged into a trailing one.
+    const META_SYNC_RE = /"artist"===\w+\.kind\|\|!\w+\.adapter\.isAlive\(/;
+    const META_SYNC_INTERVAL = 300;
+    const metaSyncCache = new WeakMap();
+    let metaSyncAt = 0;
+
+    const isMetaSync = (cb) => {
+        let v = metaSyncCache.get(cb);
+        if (v === undefined) {
+            v = META_SYNC_RE.test(nativeToString.call(cb));
+            metaSyncCache.set(cb, v);
+        }
+        return v;
+    };
+
+    hook(window, 'queueMicrotask', (queueMicrotask) => function (cb) {
+        if (typeof cb !== 'function' || !isMetaSync(cb)) return queueMicrotask.call(window, cb);
+        const run = () => {
+            try {
+                cb();
+            } finally {
+                metaSyncAt = performance.now();
+                stats.metaSyncRuns++;
+            }
+        };
+        const wait = metaSyncAt + META_SYNC_INTERVAL - performance.now();
+        if (wait <= 0) return queueMicrotask.call(window, run);
+        stats.metaSyncDeferred++;
+        setTimeout(run, wait);
     });
 
     // ---- mobx-react-lite observer leak ----
